@@ -82,7 +82,8 @@ setInterval(animateBird,100);
 
 
 document.addEventListener("keydown",moveBird);
-
+document.addEventListener("mousedown",moveBird);
+document.addEventListener("touchstart",moveBird);
 }
 function update(){ 
     requestAnimationFrame(update);
@@ -95,6 +96,9 @@ function update(){
   
 
 velocityY+=gravity;
+
+
+
 bird.y=Math.max(bird.y+velocityY,0);
 
 if(bird.y>board.height){
@@ -170,7 +174,7 @@ pipeArray.push(bottomPipes);
 }
 
 function moveBird(e){
-if(e.code=="Space"){
+if(e.code=="Space"|| e.type === "mousedown" || e.type === "touchstart"){
 wingSound.play();
 velocityY=-6;
 bgmsound.play();
