@@ -10,7 +10,7 @@ let birdY=boardHeight/2;
 //let birdImg;
 let birdImgs=[];
 let birdImgIndex=0;
-
+let lastTime = 0;
 let bird={
     x:birdX,
     y:birdY,
@@ -83,10 +83,12 @@ setInterval(animateBird,100);
 
 document.addEventListener("keydown",moveBird);
 document.addEventListener("mousedown",moveBird);
-document.addEventListener("touchstart",moveBird);
+document.addEventListener("touchstart",moveBird,{ passive: false });
 }
-function update(){ 
+function update(time){ 
     requestAnimationFrame(update);
+        let delta = (time - lastTime) / 7; 
+    lastTime = time;
     if(gameOver){
         return;
     }
@@ -95,11 +97,11 @@ function update(){
 
   
 
-velocityY+=gravity;
+velocityY+=gravity*delta;
+bird.y = bird.y + velocityY;
 
 
-
-bird.y=Math.max(bird.y+velocityY,0);
+bird.y = Math.max(bird.y + velocityY * delta, 0);
 
 if(bird.y>board.height){
     gameOver=true;
@@ -144,7 +146,7 @@ if(gameOver){
 }
 
 let randomPipeY=pipesY-pipesHeight/4-Math.random()*(pipesHeight/2);
-let openingSpace=board.height/4;
+let openingSpace=board.height/4+50;
 
 
 
@@ -176,7 +178,7 @@ pipeArray.push(bottomPipes);
 function moveBird(e){
 if(e.code=="Space"|| e.type === "mousedown" || e.type === "touchstart"){
 wingSound.play();
-velocityY=-6;
+velocityY=-5;
 bgmsound.play();
 
 
