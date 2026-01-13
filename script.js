@@ -30,7 +30,7 @@ let bottomPipeImg;
 
 
 let velocityX=-2;
-let velocityY;
+let velocityY=0;
 let jumpStrength=-5.7;
 let gravity=0.32;
 
@@ -92,6 +92,7 @@ function update(time){
             lastTime=time;
         }
         let delta = (time - lastTime) / 16.67; 
+    lastTime = time;
     
     if(gameOver){
         return;
@@ -216,6 +217,7 @@ function animateBird(){
 
 
 }
+
 
 
 
