@@ -30,8 +30,9 @@ let bottomPipeImg;
 
 
 let velocityX=-2;
-let velocityY=0;
-let gravity=0.2;
+let velocityY;
+let jumpStrength=-5.7;
+let gravity=0.32;
 
 
 
@@ -82,13 +83,16 @@ setInterval(animateBird,100);
 
 
 document.addEventListener("keydown",moveBird);
-document.addEventListener("mousedown",moveBird);
+//document.addEventListener("mousedown",moveBird);
 document.addEventListener("touchstart",moveBird,{ passive: false });
 }
 function update(time){ 
-    requestAnimationFrame(update);
-        let delta = (time - lastTime) / 16; 
-    lastTime = time;
+    requestAnimationFrame(update)
+        if(!lastTime){
+            lastTime=time;
+        }
+        let delta = (time - lastTime) / 16.67; 
+    
     if(gameOver){
         return;
     }
@@ -98,7 +102,7 @@ function update(time){
   
 
 velocityY+=gravity*delta;
-bird.y = bird.y + velocityY;
+//bird.y = bird.y + velocityY;
 
 
 bird.y = Math.max(bird.y + velocityY * delta, 0);
@@ -178,7 +182,7 @@ pipeArray.push(bottomPipes);
 function moveBird(e){
 if(e.code=="Space"|| e.type === "mousedown" || e.type === "touchstart"){
 wingSound.play();
-velocityY=-7;
+velocityY=jumpStrength;
 bgmsound.play();
 
 
@@ -209,4 +213,5 @@ function animateBird(){
 
 
 }
+
 
