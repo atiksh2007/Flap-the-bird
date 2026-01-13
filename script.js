@@ -87,7 +87,7 @@ document.addEventListener("touchstart",moveBird,{ passive: false });
 }
 function update(time){ 
     requestAnimationFrame(update);
-        let delta = (time - lastTime) / 7; 
+        let delta = (time - lastTime) / 16; 
     lastTime = time;
     if(gameOver){
         return;
@@ -178,7 +178,7 @@ pipeArray.push(bottomPipes);
 function moveBird(e){
 if(e.code=="Space"|| e.type === "mousedown" || e.type === "touchstart"){
 wingSound.play();
-velocityY=-5;
+velocityY=-7;
 bgmsound.play();
 
 
@@ -209,3 +209,4 @@ function animateBird(){
 
 
 }
+
