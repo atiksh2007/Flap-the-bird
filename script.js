@@ -180,7 +180,10 @@ pipeArray.push(bottomPipes);
 }
 
 function moveBird(e){
-if(e.code=="Space"|| e.type === "mousedown" || e.type === "touchstart"){
+    if(e.type=="touchstart"){
+        e.preventDefault();
+    }
+if(e.code=="Space"|| e.type === "touchstart"){
 wingSound.play();
 velocityY=jumpStrength;
 bgmsound.play();
@@ -213,5 +216,6 @@ function animateBird(){
 
 
 }
+
 
 
