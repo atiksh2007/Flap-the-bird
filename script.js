@@ -151,7 +151,7 @@ if(gameOver){
 }
 
 let randomPipeY=pipesY-pipesHeight/4-Math.random()*(pipesHeight/2);
-let openingSpace=board.height/4+50;
+let openingSpace=board.height/4+20;
 
 
 
@@ -217,6 +217,7 @@ function animateBird(){
 
 
 }
+
 
 
 
