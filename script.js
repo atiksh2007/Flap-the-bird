@@ -10,7 +10,7 @@ let birdY=boardHeight/2;
 //let birdImg;
 let birdImgs=[];
 let birdImgIndex=0;
-
+let lastTime = 0;
 let bird={
     x:birdX,
     y:birdY,
@@ -31,7 +31,8 @@ let bottomPipeImg;
 
 let velocityX=-2;
 let velocityY=0;
-let gravity=0.2;
+let jumpStrength=-5.7;
+let gravity=0.32;
 
 
 
@@ -82,10 +83,17 @@ setInterval(animateBird,100);
 
 
 document.addEventListener("keydown",moveBird);
-
+//document.addEventListener("mousedown",moveBird);
+document.addEventListener("touchstart",moveBird,{ passive: false });
 }
-function update(){ 
-    requestAnimationFrame(update);
+function update(time){ 
+    requestAnimationFrame(update)
+        if(!lastTime){
+            lastTime=time;
+        }
+        let delta = (time - lastTime) / 16.67; 
+    lastTime = time;
+    
     if(gameOver){
         return;
     }
@@ -94,8 +102,11 @@ function update(){
 
   
 
-velocityY+=gravity;
-bird.y=Math.max(bird.y+velocityY,0);
+velocityY+=gravity*delta;
+//bird.y = bird.y + velocityY;
+
+
+bird.y = Math.max(bird.y + velocityY * delta, 0);
 
 if(bird.y>board.height){
     gameOver=true;
@@ -140,7 +151,7 @@ if(gameOver){
 }
 
 let randomPipeY=pipesY-pipesHeight/4-Math.random()*(pipesHeight/2);
-let openingSpace=board.height/4;
+let openingSpace=board.height/4+20;
 
 
 
@@ -170,9 +181,12 @@ pipeArray.push(bottomPipes);
 }
 
 function moveBird(e){
-if(e.code=="Space"){
+    if(e.type=="touchstart"){
+        e.preventDefault();
+    }
+if(e.code=="Space"|| e.type === "touchstart"){
 wingSound.play();
-velocityY=-6;
+velocityY=jumpStrength;
 bgmsound.play();
 
 
@@ -203,3 +217,9 @@ function animateBird(){
 
 
 }
+
+
+
+
+
+
